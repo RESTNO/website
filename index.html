@@ -151,6 +151,39 @@
     <footer>
       © <span id="year"></span> Vida Estudiantil — Hecho por estudiantes. <span class="muted">Diseño adaptativo · Fácil edición</span>
     </footer>
+
+    <!-- Join Us Section -->
+     <section class="card" style="margin-top:20px;padding:20px;text-align:left">
+      <h2 style="margin-top:0">¿Te gustaría unirte a nosotros?</h2>
+      <p class="muted">Completa este pequeño formulario si deseas formar parte del equipo de Vida Estudiantil.</p>
+
+      <form onsubmit="alert('Gracias por tu solicitud. El comité revisará tu aplicación. (Demo local)'); this.reset(); return false;">
+        <label>Nombre completo</label>
+        <input type="text" required placeholder="Ej: María López" />
+
+        <label style="margin-top:10px">Grado / Sección</label>
+        <input type="text" required placeholder="Ej: 9no c" />
+
+        <label style="margin-top:10px">¿Qué rol que te gustaría desempeñar?</label>
+        <select required>
+          <option value="">Selecciona una opción</option>
+          <option>Redactor / Contenido</option>
+          <option>Fotógrafo</option>
+          <option>Camarógrafo / Editor</option>
+          <option>Diseñador Gráfico</option>
+          <option>Administrador de Redes Sociales</option>
+          <option>Relaciones Públicas</option>
+          <option>Investigador</option>
+          <option>Coordinador de Eventos</option>
+          <option>Gestor de Calidad Digital</option>
+        </select>
+
+        <label style="margin-top:10px">¿Por qué quieres unirte?</label>
+        <textarea required placeholder="Escribe tu motivación"></textarea>
+
+          <button class="btn" style="margin-top:12px" type="submit">Enviar solicitud</button>
+      </form>
+      </section>
   </main>
 
   <!-- Modal new post (simple) -->
