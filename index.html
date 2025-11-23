@@ -1,41 +1,72 @@
-<!-- index.html (actualizado) -->
 <!doctype html>
-<html lang="es" data-theme="light">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Vida Estudiantil — Colegio</title>
   <meta name="description" content="Página informativa creada por estudiantes para estudiantes: noticias, eventos, galería y participación." />
   <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-  <!-- En producción coloca styles.css en la misma carpeta y elimina el bloque CSS en comentarios superior -->
-  <link rel="stylesheet" href="./styles.css">
   <style>
-    /* mínimos estilos en línea para evitar cambio de colores en caso de fallo de carga */
-    :root{--accent:#f9635c}
-    .btn{background:var(--accent);color:#fff}
+    :root{
+      --bg:#f7f8fb; --card:#ffffff; --accent:#f9635c; --muted:#6b7280; --accent-2:#ffb703; --glass:rgba(255,255,255,0.6);
+      --radius:12px; --shadow:0 6px 18px rgba(16,24,40,0.08);
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#eef2f6);color:#0f172a;line-height:1.5}
+    header{background:linear-gradient(90deg,var(--accent),#f9635c);color:#fff;padding:28px 18px;border-bottom-left-radius:18px;border-bottom-right-radius:18px}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:48px;height:48px;border-radius:8px;box-shadow:var(--shadow);object-fit:cover}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:6px 0 0;color:rgba(255,255,255,0.92)}
+
+    /* layout */
+    .layout{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-top:22px}
+    @media (max-width:900px){.layout{grid-template-columns:1fr}}
+
+    /* cards */
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+    .feed .post{display:grid;grid-template-columns:100px 1fr;gap:12px;padding:14px;border-radius:10px;border:1px solid rgba(15,23,42,0.03);margin-bottom:12px}
+    .post img{width:100%;height:86px;object-fit:cover;border-radius:8px}
+    .post h3{margin:0;font-size:16px}
+    .meta{font-size:13px;color:var(--muted);margin-top:6px}
+
+    /* controls */
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{background:var(--accent);color:#fff;border:none;padding:8px 12px;border-radius:10px;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--accent)}
+
+    /* sidebar */
+    .sidebar .event{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);margin-bottom:10px}
+    .event .date{min-width:56px;background:linear-gradient(180deg,var(--accent-2),#ffecb3);padding:8px;border-radius:8px;text-align:center;font-weight:700}
+
+    /* gallery */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    @media (max-width:700px){.gallery{grid-template-columns:repeat(2,1fr)}}
+    .gallery img{width:100%;height:100px;object-fit:cover;border-radius:8px;cursor:pointer}
+
+    footer{margin-top:28px;padding:18px 0;color:var(--muted);text-align:center}
+
+    /* form */
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type=text],textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);background:#fff}
+    textarea{min-height:90px}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .chip{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);border:1px solid rgba(15,23,42,0.04);font-size:13px}
   </style>
 </head>
 <body>
   <header>
-    <div class="container" style="display:flex;justify-content:space-between;align-items:center">
+    <div class="container">
       <div class="brand">
-          <img src="Logo.png" alt="Logo del Proyecto" class="logo">
+          <img src="Free C-14Aug25 S-16Oct25 Pro (1).png" alt="Logo del Proyecto">
           <div>
             <h1>Vida Estudiantil</h1>
             <p class="lead">Hecho por estudiantes · Para estudiantes — Noticias, eventos y galería</p>
         </div>
-      </div>
-
-      <div class="top-controls">
-        <select id="sectionSelect" class="nav-select" aria-label="Filtrar secciones">
-          <option value="all">Todas las secciones</option>
-          <option value="Información">Información</option>
-          <option value="Ciencias">Ciencias</option>
-          <option value="Cultura">Cultura</option>
-          <option value="Deporte">Deporte</option>
-        </select>
-        <button id="themeToggle" class="menu" title="Cambiar modo">🌓</button>
-        <button class="btn" onclick="openNewPost()">+ Nueva publicación</button>
       </div>
     </div>
   </header>
@@ -43,7 +74,7 @@
   <main class="container" id="app">
     <div class="layout">
       <!-- Feed -->
-      <section class="feed" aria-live="polite">
+      <section class="feed">
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
             <div>
@@ -51,31 +82,31 @@
               <div class="muted" style="font-size:13px">Actualizadas semanalmente</div>
             </div>
             <div class="controls">
+              <button class="btn" onclick="openNewPost()">+ Nueva publicación</button>
               <button class="btn secondary" onclick="filterPosts('all')">Ver todo</button>
             </div>
           </div>
 
-          <div id="posts"></div>
+          <div id="posts" aria-live="polite"></div>
         </div>
 
-        <!-- highlighted sections -->
         <div class="card" style="margin-top:14px">
           <strong>Secciones destacadas</strong>
           <p class="muted" style="margin-top:8px">Encuentra columnas como Estudiante Destacado, Galería, Cultura y Deporte, Proyectos y Noticias.</p>
 
           <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-            <button class="chip" onclick="filterPosts('Cultura')">Cultura</button>
-            <button class="chip" onclick="filterPosts('Ciencias')">Ciencia</button>
-            <button class="chip" onclick="filterPosts('Deporte')">Deporte</button>
-            <button class="chip" onclick="filterPosts('Información')">Información</button>
+            <span class="chip">Cultura</span>
+            <span class="chip">Ciencia</span> 
+            <span class="chip">Deporte</span>
+            <span class="chip">Arte</span>
+            <span class="chip">Información</span>
           </div>
         </div>
 
-        <!-- contribution form -->
         <div class="card" style="margin-top:14px">
           <strong>Enviar aporte</strong>
           <p class="muted">Si quieres compartir una noticia o evento, envíala al comité de comunicación.</p>
-          <form id="contribForm">
+          <form onsubmit="submitContribution(event)">
             <label for="name">Nombre</label>
             <input id="name" required type="text" placeholder="Tu nombre">
             <label for="title" style="margin-top:8px">Título</label>
@@ -108,7 +139,7 @@
           <strong>Contacto</strong>
           <p class="muted" style="margin-top:8px">Comité de Comunicación — docente asesor: prof. Jeimy Mejía</p>
           <p style="margin-top:6px">Correo: <a href="mailto:inmaculada0207@yahoo.com">inmaculada0207@yahoo.com</a></p>
-          <div class="social-links" style="display:flex;gap:8px;margin-top:8px">
+          <div class="social-links">
             <a href="https://www.facebook.com/profile.php?id=61583231951111" id="facebookLink" target="_blank">Facebook</a>
             <a href="#" id="instagramLink" target="_blank">Instagram</a>
             <a href="https://whatsapp.com/channel/0029Vb6mv1W2Jl8BLQ3SJi1y" id="whatsappLink" target="_blank">WhatsApp</a>
@@ -117,7 +148,7 @@
       </aside>
     </div>
 
-    <!-- Join Us Section (multisection accordion style) -->
+        <!-- Join Us Section -->
     <div class="card" style="margin-top:20px;padding:0;overflow:hidden">
       <button id="joinToggle" style="width:100%;padding:14px;border:none;background:var(--accent);color:white;font-size:16px;cursor:pointer;text-align:left;border-radius:12px 12px 0 0">¿Te gustaría unirte a nosotros? ▾</button>
 
@@ -153,17 +184,28 @@
       </div>
     </div>
 
+    <script>
+      const joinToggle = document.getElementById('joinToggle');
+      const joinContent = document.getElementById('joinContent');
+
+    joinToggle.addEventListener('click', () => {
+      const isOpen = joinContent.style.display === 'block';
+      joinContent.style.display = isOpen ? 'none' : 'block';
+      joinToggle.textContent = isOpen ? '¿Te gustaría unirte a nosotros? ▾' : '¿Te gustaría unirte a nosotros? ▴';
+    });
+    </script> 
+    
     <footer>
       © <span id="year"></span> Vida Estudiantil — Hecho por estudiantes. <span class="muted">Diseño adaptativo · Fácil edición</span>
     </footer>
 
   </main>
 
-  <!-- Modal new post (mejorado) -->
-  <div id="modal" class="hidden" style="position:fixed;inset:0;background:rgba(2,6,23,0.5);align-items:center;justify-content:center;padding:20px">
+  <!-- Modal new post (simple) -->
+  <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.5);align-items:center;justify-content:center;padding:20px">
     <div style="width:100%;max-width:720px;background:var(--card);border-radius:12px;padding:18px;box-shadow:var(--shadow)">
       <h3 style="margin-top:0">Crear nueva publicación</h3>
-      <form id="createPostForm">
+      <form onsubmit="createPost(event)">
         <label for="postTitle">Título</label>
         <input id="postTitle" required type="text">
         <label for="postText" style="margin-top:8px">Contenido</label>
@@ -179,11 +221,11 @@
   </div>
 
   <script>
-    // Datos de muestra
+    // sample data (replace with backend or CMS later)
     const postsData = [
-      {id:1,title:'Simposio',text:'Estudiantes de 11mo grado realizaron el simposio de Investigación Documental, demostrando habilidades en la búsqueda, análisis y exposición de información relevante.',img:"Simposio.jpg",date:'2025-11-07',section:'Información',author:'Prof. Jimmy'},
-      {id:2,title:'Liga de conocimiento matemático',text:'Actividad realizada por estudiantes para ver su destreza matemática.',img:'LCM.jpg',date:'2025-11-06',section:'Ciencias',author:'Prof. Jimmy'},
-      {id:3,title:'Torneo de fútbol escolar municipal',text:'Niños y niñas de educación primaria participaron en el Torneo Escolar Municipal de Fútbol.',img:'Deporte.jpg',date:'2025-11-06',section:'Cultura',author:'Ronmel Enmanuel'},
+      {id:1,title:'Simposio',text:'Estudiantes de 11mo grado realizaron el simposio de Investigación Documental, demostrando habilidades en la búsqueda, análisis y exposición de información relevante.',img:'Simposio.jpg',date:'11-07-2025',section:'Información'},
+      {id:2,title:'Liga de conocimiento matemático',text:'Actividad realizada por estudiantes para ver su destreza matemática.',img:'LCM.jpg',date:'11-06-2025',section:'Ciencias'},
+      {id:3,title:'Torneo de fútbol escolar municipal',text:'Niños y niñas de educación primaria participaron en el Torneo Escolar Municipal de Fútbol.',img:'Deporte.jpg',date:'11-06-2025',section:'Cultura'},
     ];
 
     const eventsData = [
@@ -192,34 +234,19 @@
       {date:'2025-11-28',title:'Último día de clases'},
     ];
 
-    // helpers
-    function el(sel){return document.querySelector(sel)}
-    function els(sel){return Array.from(document.querySelectorAll(sel))}
-    function formatDate(d){try{const dt=new Date(d); return dt.toLocaleDateString('es-ES',{day:'numeric',month:'short',year:'numeric'})}catch(e){return d}}
-    function escapeHtml(s){ if(!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-    // render
+    // render helpers
     function renderPosts(list){
-      const el = el('#posts'); el.innerHTML='';
+      const el = document.getElementById('posts'); el.innerHTML='';
       list.forEach(p=>{
-        const post = document.createElement('article'); post.className='post card fade-in';
-        const imgHtml = p.img?`<img src="${p.img}" alt="${p.title}">`:`<div style="width:100%;height:120px;border-radius:8px;background:linear-gradient(90deg,#f0f4f8,#e6eef8);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px">Sin imagen</div>`;
-        const excerpt = p.text.length>140?escapeHtml(p.text.slice(0,137))+"...":escapeHtml(p.text);
-        post.innerHTML = `
-          <div>${imgHtml}</div>
-          <div>
-            <h3>${escapeHtml(p.title)}</h3>
-            <div class="meta">${formatDate(p.date)} · <span class="muted">${p.section || 'General'}</span> · <em>${p.author||'Anónimo'}</em></div>
-            <p class="excerpt">${excerpt}</p>
-            <button class="readmore" onclick="openArticle(${p.id})">Leer más</button>
-          </div>
-        `;
-        el.appendChild(post);
+        const img = p.img?`<img src="${p.img}" alt="${p.title}">`:`<div style="width:100%;height:86px;border-radius:8px;background:linear-gradient(90deg,#f0f4f8,#e6eef8);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px">Sin imagen</div>`;
+        const node = document.createElement('div'); node.className='post card';
+        node.innerHTML = `<div>${img}</div><div><h3>${escapeHtml(p.title)}</h3><div class="meta">${formatDate(p.date)} · <span class="muted">${p.section || 'General'}</span></div><p style="margin-top:8px">${escapeHtml(p.text)}</p></div>`;
+        el.appendChild(node);
       })
     }
 
     function renderEvents(){
-      const el = el('#events'); el.innerHTML='';
+      const el = document.getElementById('events'); el.innerHTML='';
       eventsData.forEach(ev=>{
         const node = document.createElement('div'); node.className='event';
         node.innerHTML = `<div class="date">${new Date(ev.date).getDate()}<div style="font-size:11px;color:var(--muted)">${new Date(ev.date).toLocaleString('es-ES',{month:'short'})}</div></div><div><strong>${escapeHtml(ev.title)}</strong><div class="muted">${ev.date}</div></div>`;
@@ -228,82 +255,46 @@
     }
 
     function renderGallery(){
-      const el = el('#gallery'); el.innerHTML='';
+      const el = document.getElementById('gallery'); el.innerHTML='';
       const imgs = postsData.filter(p=>p.img).map(p=>p.img).slice(0,9);
       imgs.forEach(src=>{
         const i = document.createElement('img'); i.src = src; i.alt='Galería'; i.onclick = ()=> window.open(src,'_blank'); el.appendChild(i);
       })
     }
 
+    function formatDate(d){
+      try{const dt=new Date(d); return dt.toLocaleDateString('es-ES',{day:'numeric',month:'short',year:'numeric'})}catch(e){return d}
+    }
+
+    function escapeHtml(s){ if(!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
     // actions
-    function openNewPost(){ el('#modal').classList.remove('hidden'); el('#modal').style.display='flex'; }
-    function closeModal(){ el('#modal').classList.add('hidden'); el('#modal').style.display='none'; }
-
-    el('#createPostForm')?.addEventListener('submit', (e)=>{
+    function openNewPost(){ document.getElementById('modal').style.display='flex'; }
+    function closeModal(){ document.getElementById('modal').style.display='none'; }
+    function createPost(e){
       e.preventDefault();
-      const t = el('#postTitle').value; const txt = el('#postText').value; const img = el('#postImg').value;
+      const t=document.getElementById('postTitle').value;
+      const txt=document.getElementById('postText').value;
+      const img=document.getElementById('postImg').value;
       postsData.unshift({id:Date.now(),title:t,text:txt,img:img,date:new Date().toISOString().slice(0,10)});
-      renderPosts(postsData); renderGallery(); closeModal(); alert('Publicación creada (demo local). Para publicaciones reales integra un backend o CMS.');
-      e.target.reset();
-    })
+      renderPosts(postsData);
+      renderGallery();
+      closeModal();
+      alert('Publicación creada (demo local). Para publicaciones reales integra un backend o CMS.');
+    }
 
-    el('#contribForm')?.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const name=el('#name').value; const title=el('#title').value; const message=el('#message').value; const img=el('#img').value;
+    function submitContribution(e){ e.preventDefault();
+      const name=document.getElementById('name').value;
+      const title=document.getElementById('title').value;
+      const message=document.getElementById('message').value;
+      const img=document.getElementById('img').value;
       postsData.unshift({id:Date.now(),title:`${title} — ${name}`,text:message,img:img,date:new Date().toISOString().slice(0,10)});
       renderPosts(postsData); renderGallery(); clearForm(); alert('Gracias por tu aporte (demo local). El comité lo revisará.');
-    })
-
-    function clearForm(){ el('#name').value=''; el('#title').value=''; el('#message').value=''; el('#img').value=''; }
-
-    function filterPosts(section){
-      const select = el('#sectionSelect'); if(section==='all') { select.value='all'; renderPosts(postsData); return }
-      select.value = section;
-      const filtered = postsData.filter(p=>p.section===section);
-      renderPosts(filtered.length?filtered:postsData);
     }
 
-    // article view (single-page simple blog behaviour)
-    function openArticle(id){
-      const p = postsData.find(x=>x.id===id);
-      if(!p) return;
-      // create article overlay
-      const overlay = document.createElement('div'); overlay.style.position='fixed'; overlay.style.inset='0'; overlay.style.overflow='auto'; overlay.style.background='rgba(2,6,23,0.5)'; overlay.style.padding='20px'; overlay.id='articleOverlay';
-      const box = document.createElement('div'); box.style.maxWidth='900px'; box.style.margin='20px auto'; box.style.background='var(--card)'; box.style.borderRadius='12px'; box.style.padding='18px'; box.style.boxShadow='var(--shadow)';
-      box.innerHTML = `
-        <button style="float:right" class="btn secondary" onclick="document.getElementById('articleOverlay').remove()">Cerrar</button>
-        <h2>${escapeHtml(p.title)}</h2>
-        <div class="muted">${formatDate(p.date)} · ${p.section || 'General'} · <em>${p.author||'Anónimo'}</em></div>
-        <div style="margin-top:12px">${p.img?`<img src="${p.img}" style="width:100%;height:300px;object-fit:cover;border-radius:8px">`:''}</div>
-        <div class="article-content" style="margin-top:12px"><p>${escapeHtml(p.text)}</p></div>
-      `;
-      overlay.appendChild(box); document.body.appendChild(overlay);
-    }
+    function clearForm(){ document.getElementById('name').value=''; document.getElementById('title').value=''; document.getElementById('message').value=''; document.getElementById('img').value=''; }
 
-    // theme toggle
-    const themeToggle = el('#themeToggle'); themeToggle.addEventListener('click', ()=>{
-      const root = document.documentElement; const cur = root.getAttribute('data-theme') || 'light';
-      const next = cur === 'light' ? 'dark' : 'light'; root.setAttribute('data-theme', next);
-      document.querySelector('body').setAttribute('data-theme', next);
-      // persist in localStorage
-      try{localStorage.setItem('ve_theme', next)}catch(e){}
-    });
-    // initialize theme from storage
-    try{ const saved = localStorage.getItem('ve_theme'); if(saved) document.documentElement.setAttribute('data-theme', saved); }catch(e){}
-
-    // join toggle
-    const joinToggle = document.getElementById('joinToggle');
-    const joinContent = document.getElementById('joinContent');
-    joinToggle.addEventListener('click', () => {
-      const isOpen = joinContent.style.display === 'block';
-      joinContent.style.display = isOpen ? 'none' : 'block';
-      joinToggle.textContent = isOpen ? '¿Te gustaría unirte a nosotros? ▾' : '¿Te gustaría unirte a nosotros? ▴';
-    });
-
-    // search select
-    el('#sectionSelect').addEventListener('change',(e)=>{
-      const v=e.target.value; if(v==='all') renderPosts(postsData); else filterPosts(v);
-    })
+    function filterPosts(section){ if(section==='all'){ renderPosts(postsData); return } const filtered = postsData.filter(p=>p.section===section); renderPosts(filtered); }
 
     // initial render
     document.getElementById('year').textContent = new Date().getFullYear();
