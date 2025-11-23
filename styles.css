@@ -6,7 +6,7 @@
 
 /* Dark mode overrides (no cambios a colores de acento solicitados) */
 [data-theme="dark"]{
-  --bg:#0b1220; --card:rgba(255,255,255,0.04); --text:#e6eef8; --muted:#9aa4b2; --glass:rgba(255,255,255,0.04);
+  --bg:#0b1220; --card:rgba(255,255,255,0.04); --text:#e6eef8; --muted:rgba(255,255,255,0.04); --glass:rgba(255,255,255,0.04);
 }
 
 *{box-sizing:border-box}
