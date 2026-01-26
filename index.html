@@ -17,6 +17,13 @@ Notes:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vida Estudiantil — CIC</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- EmailJS SDK -->
+<script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+<script>
+  (function () {
+    emailjs.init("YOUR_PUBLIC_KEY"); // ⬅️ replace with your EmailJS public key
+  })();
+</script>
 </head>
 <body class="site-root">
   <header class="site-header">
@@ -165,11 +172,22 @@ Notes:
 
     <section id="contact" class="container contact">
       <h2>Contacto</h2>
-      <form class="contact-form" onsubmit="event.preventDefault(); alert('Formulario simulado — conectar a backend');">
-        <label>Nombre <input required></label>
-        <label>Email <input type="email" required></label>
-        <label>Mensaje <textarea required></textarea></label>
-        <div><button class="btn" type="submit">Enviar</button></div>
+      <form id="contactForm" class="contact-form"></form>
+        <label>Nombre
+          <input name="from_name" required>
+        </label>
+
+        <label>Email
+          <input type="email" name="reply_to" required>
+        </label>
+
+        <label>Mensaje
+          <textarea name="message" required></textarea>
+        </label>
+<div>
+  <button class="btn" type="submit">Enviar</button>
+</div>
+
       </form>
     </section>
 
@@ -233,6 +251,36 @@ Notes:
       });
 
     })();
+  // --- EmailJS Contact Form ---
+  const contactForm = document.getElementById("contactForm");
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const templateParams = {
+        from_name: contactForm.from_name.value,
+        reply_to: contactForm.reply_to.value,
+        message: contactForm.message.value,
+        status: "PENDIENTE",
+        submitted_at: new Date().toLocaleString()
+      };
+
+      emailjs.send(
+        "YOUR_SERVICE_ID",   // ⬅️ EmailJS service ID
+        "YOUR_TEMPLATE_ID",  // ⬅️ EmailJS template ID
+        templateParams
+      )
+      .then(() => {
+        alert("Mensaje enviado correctamente. Queda pendiente de aprobación.");
+        contactForm.reset();
+      })
+      .catch((error) => {
+        console.error("EmailJS error:", error);
+        alert("Error al enviar el mensaje. Inténtalo más tarde.");
+      });
+    });
+    }
   </script>
 
 </body>
